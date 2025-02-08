@@ -1,6 +1,37 @@
-import React from 'react'
+'use client'
+import { login } from '@/actions/auth'
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 
-const page = () => {
+const Page = () => {
+  const [email, setemail] = useState('')
+  const [password, setpassword] = useState('')
+  const router = useRouter();
+
+  async function signIn() {
+    try{
+      const user = await login(email, password);
+      alert('Login Success');
+      localStorage.setItem('token', user);
+      localStorage.setItem('email', email);
+      router.push('/');
+    }catch(e){
+      if (e instanceof Error) {
+        alert(e.message);
+      } else {
+        alert(e);
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if(token){
+      window.location.href = '/';
+    }
+  }, [])
+
   return (
     <div>
         <div className='w-screen h-[100vh]' style={{backgroundImage: "url('/R-2.jpg')", backgroundSize:"cover", backgroundPosition:"center"}}>
@@ -12,7 +43,7 @@ const page = () => {
                 </div>
                 <div className='w-1/3 h-[40vh] flex justify-center items-start bg-white/30 px-5 border mt-16 pt-12'>
                     <div>
-                        <form>
+                        <div>
                             <div className='form w-full flex flex-col gap-4 justify-center'>
                                
                                 <div>
@@ -20,6 +51,8 @@ const page = () => {
                                     <input
                                         type="email"
                                         id="email"
+                                        value={email}
+                                        onChange={(e) => setemail(e.target.value)}
                                         className='w-full px-4 py-2 text-black border border-gray-400 rounded'
                                     />
                                 </div>
@@ -28,14 +61,16 @@ const page = () => {
                                     <input
                                         type="password"
                                         id="password"
+                                        value={password}
+                                        onChange={(e) => setpassword(e.target.value)}
                                         className='w-full px-4 py-2 text-black border border-gray-400 rounded'
                                     />
                                 </div>
                                 <div className='flex justify-center items-center'>
-                                    <button className='bg-black/60 text-xl rounded-sm py-2 px-4 mt-6'>LOGIN</button>
+                                    <button className='bg-black/60 text-xl rounded-sm py-2 px-4 mt-6' onClick={signIn}>LOGIN</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
 
                 </div>
@@ -46,4 +81,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

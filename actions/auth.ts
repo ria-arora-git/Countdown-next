@@ -1,6 +1,8 @@
 'use server'
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword,  } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword,  } from "firebase/auth";
+import { getDocs, getFirestore } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore"; 
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -12,18 +14,42 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID
   };
   
+  const app = initializeApp(firebaseConfig);
 
   
   
   export async function login(email: string, password: string) {
-      const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     return await signInWithEmailAndPassword(auth, email, password);
 }
 
 export async function register(email: string, password: string, name: string, dob: string){
-    // create a timestamp random from now to next 90 years
+    const db = getFirestore(app);
     const timestamp = Math.floor(Date.now() + Math.random() * 1000 * 60 * 60 * 24 * 365 * 90);
-    return timestamp;
+    
+    const docRef = await addDoc(collection(db, "users"), {
+        name: name,
+        dob: dob,
+        email: email,
+        timestamp: timestamp
+    });
+    console.log("Document written with ID: ", docRef.id);
+    
+    const auth = getAuth(app);
+
+    return await createUserWithEmailAndPassword(auth, email, password);
+
 }
 
+export async function getMyTime(email: string){
+    const db = getFirestore(app);
+    const docRef = collection(db, "users");
+    const q = await getDocs(docRef);
+    let time = 0;
+    q.forEach((doc) => {
+        if(doc.data().email == email){
+            time = doc.data().timestamp;
+        }
+    });
+    return time;
+}

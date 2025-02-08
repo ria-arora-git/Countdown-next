@@ -20,7 +20,9 @@ const firebaseConfig = {
   
   export async function login(email: string, password: string) {
     const auth = getAuth(app);
-    return await signInWithEmailAndPassword(auth, email, password);
+    return await signInWithEmailAndPassword(auth, email, password).then((userCredential) => { 
+        return userCredential.user.getIdToken();
+    });
 }
 
 export async function register(email: string, password: string, name: string, dob: string){

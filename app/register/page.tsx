@@ -7,16 +7,31 @@ const page = () => {
             <div className='flex justify-center items-center flex-col'>
                 <div>
                     <h1 className='h-[20vh] text-6xl flex justify-center items-center font-bold'>
-                        Login
+                        Sign up
                     </h1>
                 </div>
-                <div className='w-1/3 h-[40vh] flex justify-center items-start bg-white/30 px-5 border mt-16 pt-12'>
+                <div className='w-1/3 h-[60vh] flex justify-center items-start bg-white/30 p-5 pt-14 border border-black/30 shadow-sm '>
                     <div>
                         <form>
-                            <div className='form w-full flex flex-col gap-4 justify-center'>
-                               
+                            <div className='form w-full flex flex-col gap-4'>
                                 <div>
-                                    <label className='m-2 text-xl text-grey-200 font-semibold'>Email : </label>
+                                    <label className='m-2 text-xl text-grey-200'>Name : </label>
+                                    <input
+                                        type="name"
+                                        id="name"
+                                        className='w-full px-4 py-2 text-black border border-gray-400 rounded'
+                                    />
+                                </div>
+                                <div>
+                                    <label className='m-2 text-xl text-grey-200'>DOB : </label>
+                                    <input
+                                        type="date"
+                                        id="date"
+                                        className='w-full px-4 py-2 text-black border border-gray-400 rounded'
+                                    />
+                                </div>
+                                <div>
+                                    <label className='m-2 text-xl text-grey-200'>Email : </label>
                                     <input
                                         type="email"
                                         id="email"
@@ -24,7 +39,7 @@ const page = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label className='m-2 text-xl text-grey-200 font-semibold'>Password : </label>
+                                    <label className='m-2 text-xl text-grey-200'>Password : </label>
                                     <input
                                         type="password"
                                         id="password"
@@ -32,7 +47,7 @@ const page = () => {
                                     />
                                 </div>
                                 <div className='flex justify-center items-center'>
-                                    <button className='bg-black/60 text-xl rounded-sm py-2 px-4 mt-6'>LOGIN</button>
+                                    <button className='bg-black/60 text-xl rounded-sm py-2 px-4 mt-6'>SIGN UP</button>
                                 </div>
                             </div>
                         </form>

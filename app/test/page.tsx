@@ -1,5 +1,5 @@
 'use client'
-import { register } from '@/actions/auth';
+import { testTime } from '@/actions/auth';
 import { useEffect, useState } from 'react';
 
 function Countdown({ targetDate }: { targetDate: number }) {
@@ -55,7 +55,7 @@ export default function Page() {
 
     useEffect(() => {
         async function fetchTimestamp() {
-            const ts = await register('', '', '', '');
+            const ts = await testTime();
             setTimestamp(new Date(ts).getTime());
         }
 

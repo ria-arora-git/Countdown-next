@@ -23,6 +23,12 @@ const firebaseConfig = {
     return await signInWithEmailAndPassword(auth, email, password);
 }
 
+
+export async function testTime(){
+    const timestamp = Math.floor(Date.now() + Math.random() * 1000 * 60 * 60 * 24 * 365 * 90);
+    return timestamp;
+}
+
 export async function register(email: string, password: string, name: string, dob: string){
     const db = getFirestore(app);
     const timestamp = Math.floor(Date.now() + Math.random() * 1000 * 60 * 60 * 24 * 365 * 90);

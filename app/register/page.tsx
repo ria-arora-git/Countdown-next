@@ -1,5 +1,6 @@
 'use client'
 import { register } from '@/actions/auth';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
 const Page = () => {
@@ -7,6 +8,7 @@ const Page = () => {
     const [dob, setdob] = useState('')
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
+    const router = useRouter();
 
     async function signUp() {
         console.log(name, dob, email, password);
@@ -15,6 +17,7 @@ const Page = () => {
             alert('Register Success');
             localStorage.setItem('token', user);
             localStorage.setItem('email', email);
+            router.push('/');
         }catch(e){
             if (e instanceof Error) {
                 alert(e.message);

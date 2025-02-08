@@ -29,17 +29,22 @@ export async function register(email: string, password: string, name: string, do
     const db = getFirestore(app);
     const timestamp = Math.floor(Date.now() + Math.random() * 1000 * 60 * 60 * 24 * 365 * 90);
     
-    const docRef = await addDoc(collection(db, "users"), {
-        name: name,
-        dob: dob,
-        email: email,
-        timestamp: timestamp
-    });
-    console.log("Document written with ID: ", docRef.id);
+    async function addUser() {
+        const docRef = await addDoc(collection(db, "users"), {
+            name: name,
+            dob: dob,
+            email: email,
+            timestamp: timestamp
+        });
+        console.log("Document written with ID: ", docRef.id);
+    }
     
     const auth = getAuth(app);
 
-    return await createUserWithEmailAndPassword(auth, email, password);
+    return await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        addUser();
+        return userCredential.user.getIdToken();
+    });
 
 }
 

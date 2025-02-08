@@ -1,11 +1,12 @@
 'use client'
 import { login } from '@/actions/auth'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const Page = () => {
   const [email, setemail] = useState('')
   const [password, setpassword] = useState('')
-
+  const router = useRouter();
 
   async function signIn() {
     try{
@@ -13,6 +14,7 @@ const Page = () => {
       alert('Login Success');
       localStorage.setItem('token', user);
       localStorage.setItem('email', email);
+      router.push('/');
     }catch(e){
       if (e instanceof Error) {
         alert(e.message);

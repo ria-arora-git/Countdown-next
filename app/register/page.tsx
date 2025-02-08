@@ -1,4 +1,5 @@
 'use client'
+import { register } from '@/actions/auth';
 import React, { useState } from 'react'
 
 const Page = () => {
@@ -8,6 +9,19 @@ const Page = () => {
     const [password, setpassword] = useState('')
 
     async function signUp() {
+        console.log(name, dob, email, password);
+        try {
+            const user = await register(email, password, name, dob);
+            alert('Register Success');
+            localStorage.setItem('token', user);
+            localStorage.setItem('email', email);
+        }catch(e){
+            if (e instanceof Error) {
+                alert(e.message);
+            } else {
+                alert(e);
+            }
+        }
     }
 
   return (
